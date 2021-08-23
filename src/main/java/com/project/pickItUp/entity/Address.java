@@ -3,7 +3,6 @@ package com.project.pickItUp.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Data
@@ -21,21 +20,27 @@ public class Address {
     @Column(name = "address")
     private String address;
 
+    @OneToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
+    @OneToOne
     @JoinColumn(name = "state_id", referencedColumnName = "id")
     private State state;
 
+    @OneToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
 
+    @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @OneToOne
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
 
+    @OneToOne
     @JoinColumn(name = "event_id", referencedColumnName = "id")
     private Event event;
 
