@@ -20,27 +20,27 @@ public class Address {
     @Column(name = "address")
     private String address;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "state_id", referencedColumnName = "id")
     private State state;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "event_id", referencedColumnName = "id")
     private Event event;
 

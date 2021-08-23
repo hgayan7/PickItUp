@@ -17,24 +17,24 @@ public class PickupRequest {
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
 
-//    @Column(name = "requested_date")
-//    private Date requestedDate;
+   @Column(name = "requested_date")
+   private Date requestedDate;
 
-//    @OneToOne
-//    @JoinColumn(name = "requested_by", referencedColumnName = "id")
-//    private User requestedBy;
-//
-//    @OneToOne
-//    @JoinColumn(name = "request_accepted_by", referencedColumnName = "id")
-//    private User requestAcceptedBy;
-//
-//    @OneToOne
-//    @JoinColumn(name = "for_event", referencedColumnName = "id")
-//    private Event forEvent;
-//
-////    @Enumerated
-//    @Column(name = "request_status")
-//    private Integer requestStatus;
+   @ManyToOne
+   @JoinColumn(name = "requested_by", referencedColumnName = "id")
+   private User requestedBy;
+
+   @ManyToOne
+   @JoinColumn(name = "request_accepted_by", referencedColumnName = "id")
+   private User requestAcceptedBy;
+
+   @ManyToOne
+   @JoinColumn(name = "for_event", referencedColumnName = "id")
+   private Event forEvent;
+
+   @Enumerated
+   @Column(name = "request_status")
+   private PickupRequestStatus requestStatus;
 }
 
 enum PickupRequestStatus {
