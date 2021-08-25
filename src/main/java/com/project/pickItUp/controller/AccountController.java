@@ -7,10 +7,7 @@ import com.project.pickItUp.model.response.TokenResponse;
 import com.project.pickItUp.service.AccountService;
 import com.project.pickItUp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AccountController {
@@ -28,6 +25,11 @@ public class AccountController {
 
     @PostMapping("/login")
     public @ResponseBody TokenResponse loginUser(@RequestBody UserLoginRequest request) {
-        
+        return this.accountService.loginUser(request);
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "Test";
     }
 }

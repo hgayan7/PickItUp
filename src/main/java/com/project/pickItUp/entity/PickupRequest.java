@@ -15,7 +15,7 @@ public class PickupRequest {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    private Integer id;
+    private Long id;
 
    @Column(name = "requested_date")
    private Date requestedDate;
