@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -44,5 +45,5 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id")
     )
-    private List<Organization> associatedOrganizations;
+    private List<Organization> associatedOrganizations = new ArrayList<>();
 }

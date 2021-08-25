@@ -15,7 +15,7 @@ public class JWTUtility {
     @Value("${jwt.server.secret}")
     private String SERVER_SECRET;
 
-    @Value("${jwt.seerver.tokenExpiryTime}")
+    @Value("${jwt.server.tokenExpiryTime}")
     private long ACCESS_TOKEN_EXPIRY_TIME;
     
     public String generateAccessToken(long userId) {

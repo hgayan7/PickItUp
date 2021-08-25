@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -25,5 +26,5 @@ public class Organization {
     private String websiteUrl;
 
     @ManyToMany(mappedBy = "associatedOrganizations", fetch = FetchType.LAZY)
-    private List<User> organizationMembers;
+    private List<User> organizationMembers = new ArrayList<>();
 }

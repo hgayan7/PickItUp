@@ -7,6 +7,7 @@ import com.project.pickItUp.model.response.TokenResponse;
 import com.project.pickItUp.service.AccountService;
 import com.project.pickItUp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +31,7 @@ public class AccountController {
 
     @GetMapping("/test")
     public String test() {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
         return "Test";
     }
 }
