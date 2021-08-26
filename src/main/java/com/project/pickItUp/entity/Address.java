@@ -25,14 +25,6 @@ public class Address {
     private City city;
 
     @ManyToOne
-    @JoinColumn(name = "state_id", referencedColumnName = "id")
-    private State state;
-
-    @ManyToOne
-    @JoinColumn(name = "country_id", referencedColumnName = "id")
-    private Country country;
-
-    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

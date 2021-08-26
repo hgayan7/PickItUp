@@ -19,4 +19,8 @@ public class City {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "state_id", referencedColumnName = "id")
+    private State state;
 }
