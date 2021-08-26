@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -49,10 +50,13 @@ public class OrganizationService {
                     this.userRepository.
                             findById(Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName()));
             if(requestInitiator.isPresent()) {
+                System.out.println("Initiator id "+requestInitiator.get().getId());
                 //Checks if the one requesting to add new member is part of the organization or not
-                Long count = this.userRepository.getOrganizationMemberCount(orgId,
-                        Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName()));
-                if(count == 0) {
+                long isRequestInitiatorMemberOfOrg = requestInitiator.get().getAssociatedOrganizations()
+                        .stream().filter(item -> Objects.equals(item.getId(), orgId)).count();
+//                Long count = this.userRepository.getOrganizationMemberCount(orgId,
+//                        Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName()));
+                if(isRequestInitiatorMemberOfOrg == 0) {
                     return "Only existing organization members can add new member";
                 } else {
                     org.get().getOrganizationMembers().add(user.get());
