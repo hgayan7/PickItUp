@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class AddressUpdateRequest {
     private String address;
     private Long cityId;
-    private Long requesterId;
+    private Long entityId;
     private Integer parentType;
 }

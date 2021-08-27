@@ -7,6 +7,8 @@ import com.project.pickItUp.model.response.TokenResponse;
 import com.project.pickItUp.service.AccountService;
 import com.project.pickItUp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,14 +21,14 @@ public class AccountController {
     private UserService userService;
 
     @PostMapping("/register")
-    public @ResponseBody TokenResponse registerUser(@RequestBody UserRegistrationRequest request) {
+    public ResponseEntity<TokenResponse> registerUser(@RequestBody UserRegistrationRequest request) {
         User user = this.userService.registerUser(request);
-        return this.accountService.getTokenPair(user);
+        return new ResponseEntity<>(this.accountService.getTokenPair(user), HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public @ResponseBody TokenResponse loginUser(@RequestBody UserLoginRequest request) {
-        return this.accountService.loginUser(request);
+    public ResponseEntity<TokenResponse> loginUser(@RequestBody UserLoginRequest request) {
+        return new ResponseEntity<>(this.accountService.loginUser(request), HttpStatus.OK);
     }
 
     @GetMapping("/test")

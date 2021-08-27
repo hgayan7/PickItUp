@@ -1,5 +1,6 @@
 package com.project.pickItUp.entity;
 
+import com.project.pickItUp.model.ParentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,10 +41,4 @@ public class Address {
     @Column(name = "parent_type")
     private ParentType parentType;
 
-}
-
-enum ParentType {
-    USER,
-    ORGANIZATION,
-    EVENT
 }
