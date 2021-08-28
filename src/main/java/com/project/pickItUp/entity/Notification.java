@@ -17,14 +17,14 @@ public class Notification {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Column(name = "is_read")
     private int isRead;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "pickup_request_id", referencedColumnName = "id")
     private PickupRequest request;
 }

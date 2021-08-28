@@ -41,11 +41,14 @@ public class Event {
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "event_user_table",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id")
     )
     private List<User> eventVolunteers;
+
+    @OneToMany(mappedBy = "event")
+    private List<Address> addresses;
 }

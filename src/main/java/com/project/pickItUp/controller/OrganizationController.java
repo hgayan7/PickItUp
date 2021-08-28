@@ -17,13 +17,13 @@ public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
 
-    @PostMapping("/createOrganization")
+    @PostMapping("/create/organization")
     public ResponseEntity<GenericApiResponse> createOrganization(@RequestBody OrganizationCreationRequest request) {
         return new ResponseEntity<>(new GenericApiResponse(this.organizationService.createOrganization(request)),
                 HttpStatus.OK);
     }
 
-    @PostMapping("/addOrganizationMember/orgId/{orgId}/userEmail/{email}")
+    @PostMapping("/add/organizationMember/orgId/{orgId}/userEmail/{email}")
     public ResponseEntity<GenericApiResponse> addOrganizationMember(@PathVariable Long orgId, @PathVariable String email) {
         return ResponseEntity.ok(new GenericApiResponse(this.organizationService.addOrganizationMember(orgId, email)));
     }
