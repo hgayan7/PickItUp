@@ -20,7 +20,7 @@ public class State {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
 }

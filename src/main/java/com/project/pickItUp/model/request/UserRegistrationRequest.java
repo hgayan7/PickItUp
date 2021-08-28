@@ -13,4 +13,7 @@ public class UserRegistrationRequest {
     private String email;
     private String password;
     private String contactNumber;
+    private String address;
+    private Long cityId;
+    private Integer parentType;
 }

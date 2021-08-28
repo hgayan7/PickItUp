@@ -20,4 +20,5 @@ public class ActorController {
     public ResponseEntity<GenericApiResponse> updateAddress(@RequestBody AddressUpdateRequest request) {
         return new ResponseEntity<>(new GenericApiResponse(this.actorService.updateAddress(request)), HttpStatus.OK);
     }
+
 }

@@ -41,7 +41,7 @@ public class Event {
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "event_user_table",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

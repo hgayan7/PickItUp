@@ -42,6 +42,15 @@ public class AccountService {
         }
     }
 
+    public String deleteUser() {
+        Optional<User> registeredUser = this.userRepository.findById(this.getUserId());
+        if(registeredUser.isPresent()) {
+            this.userRepository.delete(registeredUser.get());
+            return "User deleted";
+        }
+        throw new ApiRequestException("User not registered", HttpStatus.BAD_REQUEST);
+    }
+
     public Long getUserId() {
         return Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
     }

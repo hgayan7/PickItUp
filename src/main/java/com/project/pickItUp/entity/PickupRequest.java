@@ -20,7 +20,7 @@ public class PickupRequest {
    @Column(name = "requested_date")
    private Date requestedDate;
 
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "requested_by", referencedColumnName = "id")
    private User requestedBy;
 
@@ -28,7 +28,7 @@ public class PickupRequest {
    @JoinColumn(name = "request_accepted_by", referencedColumnName = "id")
    private User requestAcceptedBy;
 
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "for_event", referencedColumnName = "id")
    private Event forEvent;
 

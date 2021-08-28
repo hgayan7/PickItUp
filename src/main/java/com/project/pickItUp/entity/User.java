@@ -39,11 +39,14 @@ public class User {
     @Column(name = "is_admin")
     private int idAdmin;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "organization_user_table",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id")
     )
     private List<Organization> associatedOrganizations = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Address address;
 }
