@@ -68,6 +68,18 @@ public class EventService {
         }
     }
 
+    public String removeEventVolunteer(Long userId, Long eventId) {
+        Optional<User> user = userRepository.findById(userId);
+        Optional<Event> event = eventRepository.findById(eventId);
+        if(user.isPresent() && event.isPresent() && isUserVolunteerOfEvent(userId, eventId)) {
+            event.get().getEventVolunteers().remove(user.get());
+            eventRepository.save(event.get());
+            return "Volunteer Removed";
+        } else {
+            throw new ApiRequestException("User not a volunteer of event", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     public boolean isUserVolunteerOfEvent(Long userId, Long eventId) {
         Optional<User> user = userRepository.findById(userId);
         Optional<Event> event = eventRepository.findById(eventId);

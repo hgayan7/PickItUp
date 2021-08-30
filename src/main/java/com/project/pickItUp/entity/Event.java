@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,8 +48,11 @@ public class Event {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id")
     )
-    private List<User> eventVolunteers;
+    private List<User> eventVolunteers = new ArrayList<>();
 
     @OneToMany(mappedBy = "event")
-    private List<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "forEvent")
+    private List<PickupRequest> pickupRequests = new ArrayList<>();
 }

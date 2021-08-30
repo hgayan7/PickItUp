@@ -1,8 +1,10 @@
 package com.project.pickItUp.entity;
 
+import com.project.pickItUp.model.PickupRequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,33 +16,33 @@ import java.util.Date;
 public class PickupRequest {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-   @Column(name = "requested_date")
-   private Date requestedDate;
+    @Column(name = "requested_date")
+    private Date requestedDate;
 
-   @ManyToOne
-   @JoinColumn(name = "requested_by", referencedColumnName = "id")
-   private User requestedBy;
+    @Column(name = "unique_id")
+    private String uniqueId;
 
-   @ManyToOne
-   @JoinColumn(name = "request_accepted_by", referencedColumnName = "id")
-   private User requestAcceptedBy;
+    @Column(name = "description")
+    private String description;
 
-   @ManyToOne
-   @JoinColumn(name = "for_event", referencedColumnName = "id")
-   private Event forEvent;
+    @ManyToOne
+    @JoinColumn(name = "requested_by", referencedColumnName = "id")
+    private User requestedBy;
 
-   @Enumerated
-   @Column(name = "request_status")
-   private PickupRequestStatus requestStatus;
+    @ManyToOne
+    @JoinColumn(name = "request_accepted_by", referencedColumnName = "id")
+    private User requestAcceptedBy;
+
+    @ManyToOne
+    @JoinColumn(name = "for_event", referencedColumnName = "id")
+    private Event forEvent;
+
+    @Enumerated
+    @Column(name = "request_status")
+    private PickupRequestStatus requestStatus;
 }
 
-enum PickupRequestStatus {
-    REQUESTED,
-    WAITINGFORPICKUP,
-    PICKEDUP,
-    DELIVERED,
-    REJECTED
-}

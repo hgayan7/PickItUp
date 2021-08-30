@@ -24,6 +24,9 @@ public class Notification {
     @Column(name = "is_read")
     private int isRead;
 
+    @Column(name = "title")
+    private String title;
+
     @ManyToOne
     @JoinColumn(name = "pickup_request_id", referencedColumnName = "id")
     private PickupRequest request;

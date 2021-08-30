@@ -4,9 +4,6 @@ import com.project.pickItUp.model.ParentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Data
@@ -29,7 +26,6 @@ public class Address {
     private City city;
 
     @OneToOne
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

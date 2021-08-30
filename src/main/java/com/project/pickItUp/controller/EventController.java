@@ -28,6 +28,11 @@ public class EventController {
         return new ResponseEntity<>(new GenericApiResponse(eventService.addEventVolunteer(userId, eventId)), HttpStatus.OK);
     }
 
+    @PostMapping("/delete/eventVolunteer/userId/{userId}/eventId/{eventId}")
+    public ResponseEntity<GenericApiResponse> removeEventVolunteer(@PathVariable Long userId, @PathVariable Long eventId) {
+        return new ResponseEntity<>(new GenericApiResponse(eventService.removeEventVolunteer(userId, eventId)), HttpStatus.OK);
+    }
+
     @GetMapping("/events/cityId/{cityId}")
     public ResponseEntity<EventsByCityResponse> getEventsByCity() {
         List<EventResponse> eventList = new ArrayList<>();
