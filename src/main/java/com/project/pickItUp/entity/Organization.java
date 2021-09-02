@@ -25,6 +25,6 @@ public class Organization {
     @Column(name = "website_url")
     private String websiteUrl;
 
-    @ManyToMany(mappedBy = "associatedOrganizations", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "associatedOrganizations", fetch = FetchType.LAZY)
     private List<User> organizationMembers = new ArrayList<>();
 }

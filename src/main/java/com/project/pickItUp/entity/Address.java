@@ -1,5 +1,6 @@
 package com.project.pickItUp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.pickItUp.model.ParentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class Address {
     private Organization organization;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "event_id", referencedColumnName = "id")
     private Event event;
 

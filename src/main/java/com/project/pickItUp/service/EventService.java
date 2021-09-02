@@ -1,20 +1,28 @@
 package com.project.pickItUp.service;
 
+import com.project.pickItUp.entity.Address;
 import com.project.pickItUp.entity.Event;
 import com.project.pickItUp.entity.Organization;
 import com.project.pickItUp.entity.User;
 import com.project.pickItUp.exception.type.ApiRequestException;
 import com.project.pickItUp.model.request.EventCreationRequest;
+import com.project.pickItUp.model.response.AddressDTO;
+import com.project.pickItUp.model.response.EventDTO;
+import com.project.pickItUp.model.response.EventDetailDTO;
+import com.project.pickItUp.repository.AddressRepository;
 import com.project.pickItUp.repository.EventRepository;
 import com.project.pickItUp.repository.OrganizationRepository;
 import com.project.pickItUp.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -28,8 +36,30 @@ public class EventService {
     private EventRepository eventRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ModelMapper mapper;
+    @Autowired
+    private AddressRepository addressRepository;
 
-    public String createOrganization(EventCreationRequest request) {
+    public List<EventDTO> findAllEventsByCityId(Long cityId) {
+        return eventRepository.findAllEventsByCityId(cityId).stream()
+                .map(event -> mapper.map(event, EventDTO.class)).collect(Collectors.toList());
+    }
+
+    public EventDetailDTO findEventDetailById(Long eventId) {
+        List<Address> eventAddresses = addressRepository.findAllEventAddressesByEventId(eventId);
+        Optional<Event> event = eventRepository.findById(eventId);
+        if(event.isPresent()) {
+            EventDTO eventDTO = mapper.map(event.get(), EventDTO.class);
+            List<AddressDTO> addressDTOS = eventAddresses.stream()
+                    .map(address -> mapper.map(address, AddressDTO.class)).collect(Collectors.toList());
+            return new EventDetailDTO(eventDTO, addressDTOS);
+        } else {
+            throw new ApiRequestException("Invalid event id", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public String createEvent(EventCreationRequest request) {
         if(organizationService.isUserPartOfOrganization(accountService.getUserId(), request.getOrganizationId())) {
             Event event = new Event();
             event.setName(request.getName());

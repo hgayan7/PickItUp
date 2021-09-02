@@ -1,13 +1,20 @@
 package com.project.pickItUp;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class PickItUpApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PickItUpApplication.class, args);
+	}
+
+	@Bean
+	public ModelMapper mapper() {
+		return new ModelMapper();
 	}
 
 }

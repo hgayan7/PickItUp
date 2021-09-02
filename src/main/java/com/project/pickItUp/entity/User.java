@@ -50,9 +50,9 @@ public class User {
     @ManyToMany(mappedBy = "eventVolunteers",fetch = FetchType.LAZY)
     private List<Event> events;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Address address;
 
-    @OneToMany(mappedBy = "requestedBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "requestedBy",fetch = FetchType.LAZY)
     private List<PickupRequest> pickupRequests = new ArrayList<>();
 }

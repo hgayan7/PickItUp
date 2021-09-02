@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventResponse {
-    private Long id;
-    private String name;
-    private String description;
+public class OrganizationDetailDTO {
+    private OrganizationDTO organizationDTO;
+    private List<AddressDTO> addressDTO;
 }
