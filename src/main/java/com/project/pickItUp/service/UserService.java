@@ -1,9 +1,10 @@
 package com.project.pickItUp.service;
 
 import java.util.Optional;
-import com.project.pickItUp.entity.Address;
+
 import com.project.pickItUp.entity.City;
 import com.project.pickItUp.entity.User;
+import com.project.pickItUp.entity.UserAddress;
 import com.project.pickItUp.exception.type.ApiRequestException;
 import com.project.pickItUp.model.ParentType;
 import com.project.pickItUp.model.request.UserRegistrationRequest;
@@ -37,10 +38,9 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         Optional<City> city = cityRepository.findById(request.getCityId());
         if(!request.getAddress().isEmpty() && city.isPresent()) {
-            Address address = new Address();
+            UserAddress address = new UserAddress();
             address.setAddress(request.getAddress());
             address.setCity(city.get());
-            address.setParentType(ParentType.USER);
             address.setUser(user);
             user.setAddress(address);
         }

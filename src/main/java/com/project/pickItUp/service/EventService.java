@@ -1,7 +1,7 @@
 package com.project.pickItUp.service;
 
-import com.project.pickItUp.entity.Address;
 import com.project.pickItUp.entity.Event;
+import com.project.pickItUp.entity.EventAddress;
 import com.project.pickItUp.entity.Organization;
 import com.project.pickItUp.entity.User;
 import com.project.pickItUp.exception.type.ApiRequestException;
@@ -9,7 +9,7 @@ import com.project.pickItUp.model.request.EventCreationRequest;
 import com.project.pickItUp.model.response.AddressDTO;
 import com.project.pickItUp.model.response.EventDTO;
 import com.project.pickItUp.model.response.EventDetailDTO;
-import com.project.pickItUp.repository.AddressRepository;
+import com.project.pickItUp.repository.EventAddressRepository;
 import com.project.pickItUp.repository.EventRepository;
 import com.project.pickItUp.repository.OrganizationRepository;
 import com.project.pickItUp.repository.UserRepository;
@@ -39,7 +39,7 @@ public class EventService {
     @Autowired
     private ModelMapper mapper;
     @Autowired
-    private AddressRepository addressRepository;
+    private EventAddressRepository eventAddressRepository;
 
     public List<EventDTO> findAllEventsByCityId(Long cityId) {
         return eventRepository.findAllEventsByCityId(cityId).stream()
@@ -47,7 +47,7 @@ public class EventService {
     }
 
     public EventDetailDTO findEventDetailById(Long eventId) {
-        List<Address> eventAddresses = addressRepository.findAllEventAddressesByEventId(eventId);
+        List<EventAddress> eventAddresses = eventAddressRepository.findAllEventAddressesByEventId(eventId);
         Optional<Event> event = eventRepository.findById(eventId);
         if(event.isPresent()) {
             EventDTO eventDTO = mapper.map(event.get(), EventDTO.class);

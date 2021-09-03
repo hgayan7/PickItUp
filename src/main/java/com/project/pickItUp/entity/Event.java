@@ -53,7 +53,7 @@ public class Event {
     private List<User> eventVolunteers = new ArrayList<>();
 
     @OneToMany(mappedBy = "event")
-    private List<Address> addresses = new ArrayList<>();
+    private List<EventAddress> addresses = new ArrayList<>();
 
     @OneToMany(mappedBy = "forEvent")
     private List<PickupRequest> pickupRequests = new ArrayList<>();

@@ -1,6 +1,5 @@
 package com.project.pickItUp.model.response;
 
-import com.project.pickItUp.entity.City;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

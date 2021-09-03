@@ -51,7 +51,7 @@ public class User {
     private List<Event> events;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Address address;
+    private UserAddress address;
 
     @OneToMany(mappedBy = "requestedBy",fetch = FetchType.LAZY)
     private List<PickupRequest> pickupRequests = new ArrayList<>();

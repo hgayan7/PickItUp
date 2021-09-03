@@ -25,7 +25,11 @@ public class ActorService {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private AddressRepository addressRepository;
+    private UserAddressRepository userAddressRepository;
+    @Autowired
+    private OrganizationAddressRepository organizationAddressRepository;
+    @Autowired
+    private EventAddressRepository eventAddressRepository;
     @Autowired
     private CityRepository cityRepository;
     @Autowired
@@ -54,12 +58,11 @@ public class ActorService {
         Optional<User> user = this.userRepository.findById(accountService.getUserId());
         Optional<City> city = this.cityRepository.findById(request.getCityId());
         if(user.isPresent() && city.isPresent()) {
-            Address address = new Address();
+            UserAddress address = new UserAddress();
             address.setAddress(request.getAddress());
             address.setCity(city.get());
             address.setUser(user.get());
-            address.setParentType(ParentType.USER);
-            addressRepository.save(address);
+            userAddressRepository.save(address);
             return "Address updated";
         } else {
             throw new ApiRequestException("User or City not found",HttpStatus.BAD_REQUEST);
@@ -74,12 +77,11 @@ public class ActorService {
             if(!organizationService.isUserPartOfOrganization(requestingUser.get().getId(), request.getEntityId())) {
                 throw new ApiRequestException("You cannot access this resource", HttpStatus.FORBIDDEN);
             }
-            Address address = new Address();
+            OrganizationAddress address = new OrganizationAddress();
             address.setAddress(request.getAddress());
             address.setCity(city.get());
             address.setOrganization(org.get());
-            address.setParentType(ParentType.ORGANIZATION);
-            addressRepository.save(address);
+            organizationAddressRepository.save(address);
             return "Address updated";
         } else {
             throw new ApiRequestException("Organization or City not found",HttpStatus.BAD_REQUEST);
@@ -90,12 +92,11 @@ public class ActorService {
         Optional<Event> event = eventRepository.findById(request.getEntityId());
         Optional<City> city = this.cityRepository.findById(request.getCityId());
         if(event.isPresent() && city.isPresent()) {
-            Address address = new Address();
+            EventAddress address = new EventAddress();
             address.setAddress(request.getAddress());
             address.setCity(city.get());
             address.setEvent(event.get());
-            address.setParentType(ParentType.EVENT);
-            addressRepository.save(address);
+            eventAddressRepository.save(address);
             return "Address updated";
         } else {
             throw new ApiRequestException("Event or City not found",HttpStatus.BAD_REQUEST);

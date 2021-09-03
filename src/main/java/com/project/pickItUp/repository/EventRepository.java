@@ -1,6 +1,5 @@
 package com.project.pickItUp.repository;
 
-import com.project.pickItUp.entity.Address;
 import com.project.pickItUp.entity.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +13,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             nativeQuery = true,
             value = "select distinct e.id, e.name, e.description," +
                     " e.start_date, e.end_date, e.is_valid, e.organization_id from event_table e" +
-                    " join address_table a on e.id = a.event_id && a.city_id = ?1 and a.parent_type = 2"
+                    " join event_address_table a on e.id = a.event_id && a.city_id = ?1"
     )
     List<Event> findAllEventsByCityId(Long cityId);
 
