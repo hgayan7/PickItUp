@@ -10,6 +10,11 @@ cd target
 java -jar name_of_jar.jar
 ```
 
+## ER diagram
+<p align="center" >
+  <img width="800" height="700" src="https://user-images.githubusercontent.com/29502161/132048212-d8475287-48a5-4848-98e8-13310b7409f1.png" hspace="20">
+</p>
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
