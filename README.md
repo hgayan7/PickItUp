@@ -14,6 +14,11 @@ Clone the repository
 ```
 git clone https://github.com/hgayan7/PickItUp
 ```
+Create .jar
+```
+mvn clean
+mvn install
+```
 Build docker image of the project
 ```
 cd PickItUp
