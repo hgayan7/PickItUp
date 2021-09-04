@@ -7,7 +7,7 @@ Navigate to the project's root directory and use the below commands:
 ```bash
 mvn install
 cd target
-java -jar name_of_jar.jar
+java -jar pickItUp.jar
 ```
 ### Using Docker
 Clone the repository
@@ -26,11 +26,11 @@ docker build . -t name-of-spring-boot-project-image
 ```
 Run a MySQL container using the official MySQL docker image
 ```
-docker run --name name-of-your-mysql-container -e MYSQL_DATABASE=pickitup -e MYSQL_ROOT_PASSWORD=password -d mysql:8.0
+docker run --name mysql-standalone -e MYSQL_DATABASE=pickitup -e MYSQL_ROOT_PASSWORD=password -d mysql:8.0
 ```
-Run a new container using the name-of-spring-boot-project-image and link it to the name-of-your-mysql-container
+Run a new container using the name-of-spring-boot-project-image and link it to the mysql-standalone container
 ```
-docker run -p 8100:8100 --name name-of-spring-boot-project-container --link name-of-your-mysql-container:mysql -d name-of-spring-boot-project-image
+docker run -p 8100:8100 --name name-of-spring-boot-project-container --link mysql-standalone:mysql -d name-of-spring-boot-project-image
 ```
 
 ## ER diagram
