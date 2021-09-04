@@ -2,6 +2,11 @@
 
 PickItUp is a service that allows users to request pick up of items to deliver to charity events organized by organizations. Volunteers of an event will be facilitating the pickup and delivery from requested users. It is for the help of individuals and organizations who wish to donate items but could not do in person.
 ## Run it locally
+Clone the repository
+```
+git clone https://github.com/hgayan7/PickItUp
+cd PickItUp
+```
 ### Without using Docker
 Navigate to the project's root directory and use the below commands:
 ```bash
@@ -10,13 +15,9 @@ cd target
 java -jar pickItUp.jar
 ```
 ### Using Docker
-Clone the repository
-```
-git clone https://github.com/hgayan7/PickItUp
-```
+
 Create .jar
 ```
-cd PickItUp
 mvn clean
 mvn install
 ```
