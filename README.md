@@ -16,12 +16,12 @@ git clone https://github.com/hgayan7/PickItUp
 ```
 Create .jar
 ```
+cd PickItUp
 mvn clean
 mvn install
 ```
 Build docker image of the project
 ```
-cd PickItUp
 docker build . -t name-of-spring-boot-project-image
 ```
 Run a MySQL container using the official MySQL docker image
