@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class AccountController {
     
@@ -28,7 +30,7 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> loginUser(@RequestBody UserLoginRequest request) {
+    public ResponseEntity<TokenResponse> loginUser(@Valid @RequestBody UserLoginRequest request) {
         return new ResponseEntity<>(this.accountService.loginUser(request), HttpStatus.OK);
     }
 
