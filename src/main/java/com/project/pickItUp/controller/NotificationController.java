@@ -20,14 +20,14 @@ public class NotificationController {
     @Autowired
     private NotificationService notificationService;
 
-    @PostMapping("/update/notification/read/{notificationId}/userId/{userId}")
+    @PostMapping("notifications/{notificationId}/read/userId/{userId}")
     public ResponseEntity<GenericApiResponse> updateNotificationReadStatus(@PathVariable Long notificationId,
                                                                            @PathVariable Long userId) {
         return new ResponseEntity<>(new GenericApiResponse(notificationService.
                 updateNotificationStatus(userId,notificationId)), HttpStatus.OK);
     }
 
-    @GetMapping("/notification/userId/{userId}")
+    @GetMapping("/notifications/userId/{userId}")
     public ResponseEntity<List<NotificationDTO>> getNotificationByUserId(@PathVariable Long userId) {
         return new ResponseEntity<>(notificationService.findNotificationByUserId(userId), HttpStatus.OK);
     }

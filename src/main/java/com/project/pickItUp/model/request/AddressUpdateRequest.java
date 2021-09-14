@@ -11,5 +11,4 @@ public class AddressUpdateRequest {
     private String address;
     private Long cityId;
     private Long entityId;
-    private Integer parentType;
 }

@@ -2,10 +2,12 @@ package com.project.pickItUp.service;
 
 import java.util.Optional;
 import java.util.UUID;
+import com.project.pickItUp.entity.RefreshToken;
 import com.project.pickItUp.entity.User;
 import com.project.pickItUp.exception.type.ApiRequestException;
 import com.project.pickItUp.model.request.UserLoginRequest;
 import com.project.pickItUp.model.response.TokenResponse;
+import com.project.pickItUp.repository.RefreshTokenRepository;
 import com.project.pickItUp.repository.UserRepository;
 import com.project.pickItUp.security.JWTUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,17 @@ public class AccountService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
 
     public TokenResponse getTokenPair(User user) {
         String jwtToken = this.jwtUtility.generateAccessToken(user.getId());
         String refreshToken = UUID.randomUUID().toString();
+        RefreshToken token = new RefreshToken();
+        token.setRefreshToken(refreshToken);
+        token.setUser(user);
+        token.setValid(true);
+        this.refreshTokenRepository.save(token);
         return new TokenResponse(jwtToken, refreshToken);
     }
 

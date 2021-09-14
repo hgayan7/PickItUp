@@ -2,6 +2,7 @@ package com.project.pickItUp.controller;
 
 import com.project.pickItUp.entity.User;
 import com.project.pickItUp.model.GenericApiResponse;
+import com.project.pickItUp.model.request.AddressUpdateRequest;
 import com.project.pickItUp.model.request.UserLoginRequest;
 import com.project.pickItUp.model.request.UserRegistrationRequest;
 import com.project.pickItUp.model.response.TokenResponse;
@@ -34,7 +35,12 @@ public class AccountController {
         return new ResponseEntity<>(this.accountService.loginUser(request), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/user")
+    @PostMapping("/users/address")
+    public ResponseEntity<GenericApiResponse> updateAddress(@RequestBody AddressUpdateRequest request) {
+        return new ResponseEntity<>(new GenericApiResponse(this.userService.updateAddress(request)), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/users/delete")
     public ResponseEntity<GenericApiResponse> deleteUser() {
         return new ResponseEntity<>(new GenericApiResponse(this.accountService.deleteUser()), HttpStatus.OK);
     }

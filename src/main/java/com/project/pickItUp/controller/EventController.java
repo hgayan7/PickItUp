@@ -1,6 +1,7 @@
 package com.project.pickItUp.controller;
 
 import com.project.pickItUp.model.GenericApiResponse;
+import com.project.pickItUp.model.request.AddressUpdateRequest;
 import com.project.pickItUp.model.request.EventCreationRequest;
 import com.project.pickItUp.model.response.EventDTO;
 import com.project.pickItUp.model.response.EventDetailDTO;
@@ -17,17 +18,17 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    @PostMapping("/create/event")
+    @PostMapping("/events")
     public ResponseEntity<GenericApiResponse> createEvent(@RequestBody EventCreationRequest request) {
         return new ResponseEntity<>(new GenericApiResponse(eventService.createEvent(request)), HttpStatus.OK);
     }
 
-    @PostMapping("/add/eventVolunteer/userId/{userId}/eventId/{eventId}")
+    @PostMapping("/events/{eventId}/eventVolunteer/userId/{userId}")
     public ResponseEntity<GenericApiResponse> addEventVolunteer(@PathVariable Long userId, @PathVariable Long eventId) {
         return new ResponseEntity<>(new GenericApiResponse(eventService.addEventVolunteer(userId, eventId)), HttpStatus.OK);
     }
 
-    @PostMapping("/delete/eventVolunteer/userId/{userId}/eventId/{eventId}")
+    @DeleteMapping("/events/{eventId}/eventVolunteer/userId/{userId}")
     public ResponseEntity<GenericApiResponse> removeEventVolunteer(@PathVariable Long userId, @PathVariable Long eventId) {
         return new ResponseEntity<>(new GenericApiResponse(eventService.removeEventVolunteer(userId, eventId)), HttpStatus.OK);
     }
@@ -37,8 +38,13 @@ public class EventController {
         return new ResponseEntity<>(eventService.findAllEventsByCityId(cityId), HttpStatus.OK);
     }
 
-    @GetMapping("/events/detail/eventId/{eventId}")
+    @GetMapping("/events/{eventId}")
     public ResponseEntity<EventDetailDTO> getEventDetailById(@PathVariable Long eventId) {
         return new ResponseEntity<>(eventService.findEventDetailById(eventId), HttpStatus.OK);
+    }
+
+    @PostMapping("/events/address")
+    public ResponseEntity<GenericApiResponse> updateAddress(@RequestBody AddressUpdateRequest request) {
+        return new ResponseEntity<>(new GenericApiResponse(this.eventService.updateAddress(request)), HttpStatus.OK);
     }
 }

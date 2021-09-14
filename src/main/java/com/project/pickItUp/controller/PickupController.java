@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -16,17 +15,17 @@ public class PickupController {
     @Autowired
     private PickupService pickupService;
 
-    @PostMapping("/create/pickupRequest")
+    @PostMapping("/pickupRequests/create")
     public ResponseEntity<GenericApiResponse> createPickupRequest(@RequestBody PickupJSONRequest request) {
         return new ResponseEntity<>(new GenericApiResponse(pickupService.createPickup(request)), HttpStatus.OK);
     }
 
-    @GetMapping("/pickupRequest")
-    public ResponseEntity<List<PickupRequestDTO>> createPickupRequest() {
+    @GetMapping("/pickupRequests")
+    public ResponseEntity<List<PickupRequestDTO>> getPickupRequestsForCurrentUser() {
         return new ResponseEntity<>(pickupService.getPickupRequestForCurrentUser(), HttpStatus.OK);
     }
 
-    @PostMapping("/pickupRequest/delete/pickupRequestId/{pickupRequestId}")
+    @DeleteMapping("/pickupRequests/{pickupRequestId}")
     public ResponseEntity<GenericApiResponse> deletePickupRequest(@PathVariable Long pickupRequestId) {
         return new ResponseEntity<>(new GenericApiResponse(pickupService.deletePickupRequest(pickupRequestId)), HttpStatus.OK);
     }

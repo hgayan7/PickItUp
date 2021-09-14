@@ -1,20 +1,18 @@
 package com.project.pickItUp.service;
 
-import com.project.pickItUp.entity.Event;
-import com.project.pickItUp.entity.EventAddress;
-import com.project.pickItUp.entity.Organization;
-import com.project.pickItUp.entity.User;
+import com.project.pickItUp.controller.AddressUpdate;
+import com.project.pickItUp.entity.*;
 import com.project.pickItUp.exception.type.ApiRequestException;
+import com.project.pickItUp.model.request.AddressUpdateRequest;
 import com.project.pickItUp.model.request.EventCreationRequest;
 import com.project.pickItUp.model.response.AddressDTO;
 import com.project.pickItUp.model.response.EventDTO;
 import com.project.pickItUp.model.response.EventDetailDTO;
-import com.project.pickItUp.repository.EventAddressRepository;
-import com.project.pickItUp.repository.EventRepository;
-import com.project.pickItUp.repository.OrganizationRepository;
-import com.project.pickItUp.repository.UserRepository;
+import com.project.pickItUp.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
@@ -25,7 +23,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class EventService {
+@CacheConfig(cacheNames = "event_cache")
+public class EventService implements AddressUpdate {
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -40,12 +39,16 @@ public class EventService {
     private ModelMapper mapper;
     @Autowired
     private EventAddressRepository eventAddressRepository;
+    @Autowired
+    private CityRepository cityRepository;
 
+    @Cacheable(cacheNames = "events_city", key = "#cityId", unless = "#result == null")
     public List<EventDTO> findAllEventsByCityId(Long cityId) {
         return eventRepository.findAllEventsByCityId(cityId).stream()
                 .map(event -> mapper.map(event, EventDTO.class)).collect(Collectors.toList());
     }
 
+    @Cacheable(cacheNames = "event", key = "#eventId", unless = "#result == null")
     public EventDetailDTO findEventDetailById(Long eventId) {
         List<EventAddress> eventAddresses = eventAddressRepository.findAllEventAddressesByEventId(eventId);
         Optional<Event> event = eventRepository.findById(eventId);
@@ -64,7 +67,8 @@ public class EventService {
             Event event = new Event();
             event.setName(request.getName());
             event.setDescription(request.getDescription());
-            event.setIsValid(1);
+            //Event becomes active after verification/addition of event address
+            event.setIsValid(0);
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Optional<Organization> org = organizationRepository.findById(request.getOrganizationId());
             if(!org.isPresent()) {
@@ -119,5 +123,21 @@ public class EventService {
         long isUserVolunteer = event.get().getEventVolunteers().stream()
                 .filter(item -> Objects.equals(item.getId(), userId)).count();
         return isUserVolunteer > 0;
+    }
+
+    @Override
+    public String updateAddress(AddressUpdateRequest request) {
+        Optional<Event> event = eventRepository.findById(request.getEntityId());
+        Optional<City> city = this.cityRepository.findById(request.getCityId());
+        if(event.isPresent() && city.isPresent()) {
+            EventAddress address = new EventAddress();
+            address.setAddress(request.getAddress());
+            address.setCity(city.get());
+            address.setEvent(event.get());
+            eventAddressRepository.save(address);
+            return "Address updated";
+        } else {
+            throw new ApiRequestException("Event or City not found",HttpStatus.BAD_REQUEST);
+        }
     }
 }

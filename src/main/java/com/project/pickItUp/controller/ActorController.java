@@ -19,11 +19,6 @@ public class ActorController {
     @Autowired
     private ActorService actorService;
 
-    @PostMapping("/update/address")
-    public ResponseEntity<GenericApiResponse> updateAddress(@RequestBody AddressUpdateRequest request) {
-        return new ResponseEntity<>(new GenericApiResponse(this.actorService.updateAddress(request)), HttpStatus.OK);
-    }
-
     @GetMapping("/user")
     public ResponseEntity<UserDTO> getUser() {
         return new ResponseEntity<>(actorService.getUser(), HttpStatus.OK);

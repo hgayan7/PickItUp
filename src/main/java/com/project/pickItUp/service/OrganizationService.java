@@ -1,9 +1,15 @@
 package com.project.pickItUp.service;
 
+import com.project.pickItUp.controller.AddressUpdate;
+import com.project.pickItUp.entity.City;
 import com.project.pickItUp.entity.Organization;
+import com.project.pickItUp.entity.OrganizationAddress;
 import com.project.pickItUp.entity.User;
 import com.project.pickItUp.exception.type.ApiRequestException;
+import com.project.pickItUp.model.request.AddressUpdateRequest;
 import com.project.pickItUp.model.request.OrganizationCreationRequest;
+import com.project.pickItUp.repository.CityRepository;
+import com.project.pickItUp.repository.OrganizationAddressRepository;
 import com.project.pickItUp.repository.OrganizationRepository;
 import com.project.pickItUp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class OrganizationService {
+public class OrganizationService implements AddressUpdate {
 
     @Autowired
     private AccountService accountService;
@@ -21,6 +27,10 @@ public class OrganizationService {
     private OrganizationRepository organizationRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private OrganizationAddressRepository organizationAddressRepository;
+    @Autowired
+    private CityRepository cityRepository;
 
     public String createOrganization(OrganizationCreationRequest request) {
         Optional<Organization> registeredOrganization = this.organizationRepository.findByName(request.getName());
@@ -74,5 +84,25 @@ public class OrganizationService {
         long isUserMemberOfOrg = user.get().getAssociatedOrganizations()
                 .stream().filter(item -> Objects.equals(item.getId(), orgId)).count();
         return isUserMemberOfOrg > 0;
+    }
+
+    @Override
+    public String updateAddress(AddressUpdateRequest request) {
+        Optional<Organization> org = organizationRepository.findById(request.getEntityId());
+        Optional<City> city = this.cityRepository.findById(request.getCityId());
+        Optional<User> requestingUser = this.userRepository.findById(accountService.getUserId());
+        if(org.isPresent() && city.isPresent() && requestingUser.isPresent()) {
+            if(!isUserPartOfOrganization(requestingUser.get().getId(), request.getEntityId())) {
+                throw new ApiRequestException("You cannot access this resource", HttpStatus.FORBIDDEN);
+            }
+            OrganizationAddress address = new OrganizationAddress();
+            address.setAddress(request.getAddress());
+            address.setCity(city.get());
+            address.setOrganization(org.get());
+            organizationAddressRepository.save(address);
+            return "Address updated";
+        } else {
+            throw new ApiRequestException("Organization or City not found",HttpStatus.BAD_REQUEST);
+        }
     }
 }

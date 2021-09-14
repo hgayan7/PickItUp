@@ -1,6 +1,7 @@
 package com.project.pickItUp.controller;
 
 import com.project.pickItUp.model.GenericApiResponse;
+import com.project.pickItUp.model.request.AddressUpdateRequest;
 import com.project.pickItUp.model.request.OrganizationCreationRequest;
 import com.project.pickItUp.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +18,19 @@ public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
 
-    @PostMapping("/create/organization")
+    @PostMapping("organizations/create")
     public ResponseEntity<GenericApiResponse> createOrganization(@RequestBody OrganizationCreationRequest request) {
         return new ResponseEntity<>(new GenericApiResponse(this.organizationService.createOrganization(request)),
                 HttpStatus.OK);
     }
 
-    @PostMapping("/add/organizationMember/orgId/{orgId}/userEmail/{email}")
-    public ResponseEntity<GenericApiResponse> addOrganizationMember(@PathVariable Long orgId, @PathVariable String email) {
-        return ResponseEntity.ok(new GenericApiResponse(this.organizationService.addOrganizationMember(orgId, email)));
+    @PostMapping("/organizations/{orgId}/addMember/userEmail/{userEmail}")
+    public ResponseEntity<GenericApiResponse> addOrganizationMember(@PathVariable Long orgId, @PathVariable String userEmail) {
+        return ResponseEntity.ok(new GenericApiResponse(this.organizationService.addOrganizationMember(orgId, userEmail)));
+    }
+
+    @PostMapping("/organizations/address")
+    public ResponseEntity<GenericApiResponse> updateAddress(@RequestBody AddressUpdateRequest request) {
+        return new ResponseEntity<>(new GenericApiResponse(this.organizationService.updateAddress(request)), HttpStatus.OK);
     }
 }
