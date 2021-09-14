@@ -36,7 +36,7 @@ docker run -p 8100:8100 --name name-of-spring-boot-project-container --link mysq
 
 ## ER diagram
 <p align="center" >
-  <img width="800" height="700" src="https://user-images.githubusercontent.com/29502161/132048212-d8475287-48a5-4848-98e8-13310b7409f1.png" hspace="20">
+  <img width="800" height="900" src="https://user-images.githubusercontent.com/29502161/133283593-769ba4df-32d5-4d7c-9fa4-0f5afd5420b2.png" hspace="20">
 </p>
 
 ## Contributing
